@@ -1,0 +1,44 @@
+# GitHub Action — auto-deploy to Cloudflare Pages on push to main.
+#
+# This is OPTIONAL. Cloudflare Pages can deploy your repo directly without
+# any GitHub Action — just connect via the Pages dashboard ("Connect to Git")
+# and Cloudflare watches your `main` branch. The Action below is only useful
+# if you want extra control (e.g. running scripts before deploy, deploying to
+# multiple Pages projects, deploying preview branches with custom logic).
+#
+# To enable: rename this file's `on:` block from `workflow_dispatch` to
+# `push:` (with `branches: [main]`) and set the four secrets in the repo
+# settings → Secrets and variables → Actions.
+
+name: Deploy to Cloudflare Pages
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Substitute env vars into HTML
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          sed -i "s|__SUPABASE_URL__|$SUPABASE_URL|g" index.html
+          sed -i "s|__SUPABASE_ANON_KEY__|$SUPABASE_ANON_KEY|g" index.html
+
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: mah-stack-starter
+          directory: .
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{SITE_NAME}}</title>
+    <meta name="description" content="{{SITE_DESCRIPTION}}" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <!-- REPLACE: site header -->
+    <header class="site-header">
+      <div class="brand">{{SITE_NAME}}</div>
+      <nav class="site-nav">
+        <a href="#about">About</a>
+        <a href="#signin">Sign in</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- REPLACE: hero copy with whatever your site is about -->
+      <section class="hero">
+        <h1 class="hero-title">Hello from your stack.</h1>
+        <p class="hero-sub">
+          You forked the mah-stack-starter and got this far. Edit this text
+          in <code>index.html</code>, push to GitHub, watch Cloudflare Pages
+          auto-deploy.
+        </p>
+        <p class="backend-status" id="backend-status">
+          Backend status: <span data-state="loading">checking…</span>
+        </p>
+      </section>
+
+      <section id="about" class="content">
+        <h2>About this site</h2>
+        <p>
+          This is a starter site, built on the same architectural pattern
+          Melbourne AI Hub uses: static HTML on Cloudflare Pages, Supabase
+          for the backend, magic-link auth. Replace this paragraph with
+          whatever your project actually is.
+        </p>
+      </section>
+
+      <section id="signin" class="content">
+        <h2>Sign in</h2>
+        <p>
+          Enter your email — we'll send you a one-click sign-in link. No
+          password.
+        </p>
+        <form id="signin-form" class="signin-form">
+          <label for="email" class="visually-hidden">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="you@example.com"
+            required
+          />
+          <button type="submit">Send me a magic link</button>
+        </form>
+        <p id="signin-status" class="signin-status" hidden></p>
+        <p id="auth-status" class="auth-status" hidden></p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        Built with the
+        <a href="https://github.com/teddyscleaningserviceaus-design/mah-stack-starter">
+          mah-stack-starter
+        </a>
+        template.
+      </p>
+    </footer>
+
+    <!-- Inject env vars into the page (Cloudflare Pages substitutes these
+         in the build, or you replace them manually before deploy). -->
+    <script>
+      window.SUPABASE_URL = "__SUPABASE_URL__";
+      window.SUPABASE_ANON_KEY = "__SUPABASE_ANON_KEY__";
+    </script>
+    <script type="module" src="/js/site.js"></script>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+# Cloudflare Pages config — change `name` to whatever your project is called.
+# This file is consumed by `wrangler pages deploy` if you ever deploy from the CLI;
+# the dashboard UI doesn't strictly need it but reads `name` for project metadata.
+
+name = "mah-stack-starter"
+compatibility_date = "2025-01-01"
+pages_build_output_dir = "."
